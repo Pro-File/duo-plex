@@ -1,7 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux';
 import styled from 'styled-components';
+import {openModal} from './../../Redux/modals/modalActions';
 
-const Login = () => {
+const Login = ({openModal}) => {
     return (
         <div>
             <Container>
@@ -13,7 +15,7 @@ const Login = () => {
                             with the Dual-Plex quality. You may get any movie with just one click!
                             Sign Up now and start watching!
                         </Description>
-                        <StartNow>Start Now</StartNow>
+                        <StartNow onClick = {()=> openModal({modalType : "OpenAuthModal"})}>Start Now</StartNow>
                         <CTALogoTwo src="./images/cta-logo-two.png" alt="logos"/>
                     </CTA>
                     <Banner/>
@@ -66,7 +68,7 @@ justify-content: center;
 align-items: center;
 flex-direction: column;
 transition: 300ms all ease-out;
-max-width: 600px;
+max-width: 800px;
 width: 100%;
 
 `
@@ -111,5 +113,7 @@ const Description = styled.p`
     letter-spacing: 1.5px;
     font-size: 18px;
 `
-
-export default Login
+var actions  = ({
+    openModal,
+})
+export default connect(null, actions)(Login)

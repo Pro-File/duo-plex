@@ -1,0 +1,16 @@
+.test-modal{
+    width: 600px;
+    height: 500px;
+    min-height: 500px;
+    min-width: 300px;
+    padding: 0px 20px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    color:  #040714;
+    z-index: 100;
+}
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

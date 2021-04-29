@@ -1,44 +1,64 @@
 import styled from 'styled-components';
-import React from 'react'
+import {React, useEffect} from 'react'
+import { connect } from 'react-redux';
+import {signout} from '../../Redux/auth/authActions';
+import {openModal} from './../../Redux/modals/modalActions';
+import { useHistory } from 'react-router';
 
-const Header = () => {
+const Header = ({openModal, auth, signout}) => {
+  const history = useHistory();
+  useEffect(() => {
+    if(auth){
+      history.push("/home");
+    }
+    else{
+      history.push("/");
+    }
+  }, [auth])
     return <Nav>
         <Logo>
             <img src="./images/Site-Logo.svg" alt="Logo" />
         </Logo>
-        <NavItems>
-            <a href="/home">
-                <img src="./images/home-icon.svg" alt="HOME"/>
-                <span>Home</span>
-            </a>
-            <a>
-              <img src="/images/search-icon.svg" alt="SEARCH" />
-              <span>SEARCH</span>
-            </a>
-            <a>
-              <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
-              <span>WATCHLIST</span>
-            </a>
-            <a>
-              <img src="/images/original-icon.svg" alt="ORIGINALS" />
-              <span>ORIGINALS</span>
-            </a>
-            <a>
-              <img src="/images/movie-icon.svg" alt="MOVIES" />
-              <span>MOVIES</span>
-            </a>
-            <a>
-              <img src="/images/series-icon.svg" alt="SERIES" />
-              <span>SERIES</span>
-            </a>
-        </NavItems>
-        <Login>Login</Login>
-        {/* <SignOut>
-            <UserImg src="./images/IMG.jpg" alt="user" />
-            <DropDown>
+        {auth? 
+        <>
+                  <NavItems>
+          <a href="/home">
+              <img src="./images/home-icon.svg" alt="HOME"/>
+              <span>Home</span>
+          </a>
+          <a>
+            <img src="/images/search-icon.svg" alt="SEARCH" />
+            <span>SEARCH</span>
+          </a>
+          <a>
+            <img src="/images/watchlist-icon.svg" alt="WATCHLIST" />
+            <span>WATCHLIST</span>
+          </a>
+          <a>
+            <img src="/images/original-icon.svg" alt="ORIGINALS" />
+            <span>ORIGINALS</span>
+          </a>
+          <a>
+            <img src="/images/movie-icon.svg" alt="MOVIES" />
+            <span>MOVIES</span>
+          </a>
+          <a>
+            <img src="/images/series-icon.svg" alt="SERIES" />
+            <span>SERIES</span>
+          </a>
+      </NavItems>
+         <SignOut>
+            <UserImg src={`${auth.photo}`} alt="user" />
+            <DropDown onClick = {signout}>
               <span>Sign out</span>
             </DropDown>
-          </SignOut> */}
+          </SignOut>
+        </>
+          :
+          <>
+        <Login onClick= { ()=> openModal({modalType : "OpenAuthModal"})}>Login</Login>
+        </>
+        }
         </Nav>
 }
 
@@ -138,6 +158,7 @@ transition: all 0.2s ease 0s;
   background-color: #f9f9f9;
   color: #000;
   border-color: transparent;
+  cursor: pointer;
 }
 `;
 
@@ -147,7 +168,7 @@ height: 100%;
 
 const DropDown = styled.div`
 position: absolute;
-top: 48px;
+top: 0px;
 right: 0px;
 background: rgb(19, 19, 19);
 border: 1px solid rgba(151, 151, 151, 0.34);
@@ -178,6 +199,19 @@ ${UserImg} {
     opacity: 1;
     transition-duration: 1s;
   }
+  ${UserImg}{
+    opacity: 0;
+    transition-duration: 1s;
+  }
 }
 `;
-export default Header
+var actions = ({
+  openModal,
+  signout,
+})
+
+var mapState = (state) => ({
+  auth  : state.auth,
+})
+
+export default connect(mapState, actions)(Header)

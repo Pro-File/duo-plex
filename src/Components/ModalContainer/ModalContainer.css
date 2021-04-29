@@ -1,0 +1,18 @@
+.modal-container{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    background: rgba(0, 0, 0, 0.4);
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999999;
+    font-size: 62.5%;
+    z-index: 100;
+}
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
