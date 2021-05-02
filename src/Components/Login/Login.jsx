@@ -15,7 +15,7 @@ const Login = ({openModal}) => {
                             with the Dual-Plex quality. You may get any movie with just one click!
                             Sign Up now and start watching!
                         </Description>
-                        <StartNow onClick = {()=> openModal({modalType : "OpenAuthModal"})}>Start Now</StartNow>
+                        <StartNow onClick = {()=> openModal({modalType : "OpenSignUp"})}>Start Now</StartNow>
                         <CTALogoTwo src="./images/cta-logo-two.png" alt="logos"/>
                     </CTA>
                     <Banner/>

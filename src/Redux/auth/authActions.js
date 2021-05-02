@@ -1,9 +1,12 @@
+import { v4 as uuid } from 'uuid';
 import {
   auth,
   firestore,
   serverTimestamp,
   googleAuthProvider,
+  storage,
 } from "./../../../src/Firebase";
+
 import { REMOVE_USER, SET_USER } from "./AuthConstants";
 import firebase from "./../../Firebase";
 // import history from "../../history/history"
@@ -19,37 +22,56 @@ export var removeUser = () => ({
   type: REMOVE_USER,
 });
 
-export var signup = ({ email, password, fullName }) => async (dispatch) => {
+export var signup = (user)=> {
   try {
-    //create user on firebase auth section
-    var { user: { uid } } = await auth.createUserWithEmailAndPassword(email, password);
+        // 1-  send file to storage and get URL
+        var imageRef = storage.child(`users/img-${uuid()}.jpg`);
+        var fileListener = imageRef.put(user.photo);
+        // fileListener.on(event_type, cb-Status, cb-error-handling, cb-will trigger after file being uploaded)
+        fileListener.on("state_changed", (snapshot) => {
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            // console.log('Upload is '+progress+'% done..');
+        },
+        (error)=>{
+            console.log(error);
+        },
+        async()=>{
+            var downloadURL = await imageRef.getDownloadURL();
+            // 2- Modify productObj with photo and createdAt
+            // console.log(downloadURL)
+            user.photo = downloadURL;
+    //         // 3- create doc in the firestore Products  
+    //         //create user on firebase auth section
+    var { user: { uid } } = await auth.createUserWithEmailAndPassword(user.Email, user.Pass);
 
-    //save user data to firestore
-    var userInfo = {
-      fullName,
-      email,
-      createdAt: serverTimestamp(),
-    };
-    console.log(userInfo);
+      // console.log(user);
 
-    await firestore.collection("users").doc(uid).set(userInfo);
+    await firestore.collection("users").doc(uid).set(user);
 
     //navigate to hom page
-    // history.push("/")
+    // history.push("/home")
+            
+        }
+        );
+      return true;
+
   } catch (error) {
     console.log(error);
+    return false;
   }
 };
 
-export var signin = ({ email, password }) => async (dispatch) => {
+export var signin = (user) => async (dispatch) => {
   try {
+    // console.log(user)
     //signin user with auth
-    await auth.signInWithEmailAndPassword(email, password);
-
+    await auth.signInWithEmailAndPassword(user.Email, user.Pass);
+    return true;
     //navigate to hom page
     // history.push("/")
   } catch (error) {
     console.log(error);
+    return false;
   }
 };
 
@@ -72,9 +94,10 @@ export var googleSignin = () => async (dispatch) => {
     if (isNewUser) {
       //if new user -> add info to fire store
       var userInfo = {
-        fullName: displayName,
-        email,
+        Name: displayName,
+        Email: email,
         photo: photoURL,
+        uid,
         createdAt: serverTimestamp(),
       };
       await firestore.collection("users").doc(uid).set(userInfo);
@@ -96,11 +119,11 @@ export var checkAuthStatus = () => async (dispatch) => {
         var { uid } = user;
         //fetch user data from firestore
         var query = await firestore.collection("users").doc(uid).get();
-        var { fullName, email, photo } = query.data();
+        var { Name, Email, photo } = query.data();
         //setting up redux state
         var userDataForState = {
-          fullName,
-          email,
+          Name,
+          Email,
           photo,
           uid,
         };

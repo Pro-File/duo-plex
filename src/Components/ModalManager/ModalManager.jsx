@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import AuthModal from '../AuthModal/authModal';
+import SignupModal from '../AuthModal/SignupModal';
+import SigninModal from '../AuthModal/SigninModal';
 
 var modalLookUp = {
-    OpenAuthModal : AuthModal,
+    OpenSignUp : SignupModal,
+    OpenSignIn: SigninModal,
 }
 const ModalManager = ({modal}) => {
     var renderedmodal = null;

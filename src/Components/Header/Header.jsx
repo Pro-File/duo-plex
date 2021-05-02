@@ -56,7 +56,7 @@ const Header = ({openModal, auth, signout}) => {
         </>
           :
           <>
-        <Login onClick= { ()=> openModal({modalType : "OpenAuthModal"})}>Login</Login>
+        <Login onClick= { ()=> openModal({modalType : "OpenSignIn"})}>Login</Login>
         </>
         }
         </Nav>

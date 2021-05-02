@@ -4,14 +4,12 @@ import UseStyles from './styles';
 import { v4 as uuid } from 'uuid';
 import { connect } from 'react-redux';
 import SnackBar from '../../Components/SnackBar/SnackBar';
-import {googleSignin, signup} from '../../Redux/auth/authActions';
+import {googleSignin, signin} from '../../Redux/auth/authActions';
 import {closeModal, openModal} from '../../Redux/modals/modalActions';
 import { FaFacebook, FaGithub, FaGoogle } from 'react-icons/fa'
 import { SimpleGrid } from '@chakra-ui/layout';
 import VisuallyHidden from '@chakra-ui/visually-hidden';
-const SignUp = ({googleSignin, closeModal, openModal}) => {
-    var [photo,setImg] = useState("");
-    var [Name,setName] = useState("");
+const SignIn = ({googleSignin, closeModal, openModal, signin}) => {
     var [Email,setEmail] = useState("");
     var [Pass, setPass] = useState("");
     const [ open ,setOpen] = useState(false);
@@ -27,16 +25,14 @@ const SignUp = ({googleSignin, closeModal, openModal}) => {
         e.preventDefault();
 
         var user = {
-            uid : uuid(),
-            Name,
             Email,
             Pass,
-            photo,
         }
         
-        const SignUpStatus = await signup(user)
+        const SignInStatus = await signin(user)
+        console.log(SignInStatus)
         closeModal()
-        if(SignUpStatus === true) {
+        if(SignInStatus === true) {
           setOpen(true)
         }
         // console.log(user)
@@ -53,29 +49,19 @@ const SignUp = ({googleSignin, closeModal, openModal}) => {
             </Typography>
             </Grid>
             <Divider />
-            <Grid item xs={6} >
-            <TextField className={Classes.styled} label="Enter Name" required value={Name}
-            onChange={(e) => setName(e.target.value)} fullWidth/>
-            </Grid>
-
-            <Grid item xs={6} >
+            <Grid item xs={12} >
             <TextField className={Classes.styled} label="Enter Email" required value={Email} 
             onChange={(e) => setEmail(e.target.value)} fullWidth/>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item xs={12}>
             <TextField className={Classes.styled} label=" Enter Password" required value={Pass} 
             onChange={(e) => setPass(e.target.value)} fullWidth/>
             </Grid>
 
-            <Grid item xs={6} >
-            <TextField type="file" className={Classes.styled} label="Select Image"  value={photo} 
-            onChange={(e) => setImg(e.target.value)} fullWidth/>
-            </Grid>
-
             <Button fullWidth className={Classes.button} variant="outlined" type="submit" 
              onClick={(e) => HandleSubmit(e)} color="primary">
-                Sign Up
+                Sign In
             </Button>
             
             <Grid item xs = {12} className={Classes.social}>
@@ -98,9 +84,9 @@ const SignUp = ({googleSignin, closeModal, openModal}) => {
 
             <Grid item xs={12}>
             <Typography className={Classes.last} align="center" variant="subtitle2">
-                Already have an account?
-                <Link className={Classes.SignInBtn} onClick= {()=> openModal({modalType : "OpenSignIn"})}>
-                 Login
+                Don't have an account?
+                <Link className={Classes.SignInBtn} onClick= {()=> openModal({modalType : "OpenSignUp"})}>
+                 Sign Up
                 </Link>
             </Typography>
             </Grid>
@@ -114,6 +100,6 @@ var actions = ({
   googleSignin,
   openModal,  
   closeModal,
-  signup,
+  signin,
 })
-export default connect(null, actions)(SignUp);
+export default connect(null, actions)(SignIn);

@@ -1,11 +1,11 @@
 import React from 'react'
 import ModalContainer from '../ModalContainer/ModalContainer'
-import './authModal.css'
+import './AuthModal.css'
 import SignUp from '../SignUp/SignUp';
-const authModal = ({auth}) => {
+const SignupModal = ({auth}) => {
     return (
         <ModalContainer>
-            <div className = "test-modal center">
+            <div className = "auth-modal center">
                 <SignUp/>
             </div>
         </ModalContainer>
@@ -13,4 +13,4 @@ const authModal = ({auth}) => {
     )
 }
 
-export default authModal
+export default SignupModal
