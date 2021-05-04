@@ -17,7 +17,7 @@ const Header = ({openModal, auth, signout}) => {
   }, [auth])
     return <Nav>
         <Logo>
-            <img src="./images/Site-Logo.svg" alt="Logo" />
+            <img src="./images/logo.png" alt="Logo" />
         </Logo>
         {auth? 
         <>
@@ -68,7 +68,7 @@ top: 0;
 left: 0;
 right: 0;
 height: 100px;
-background: transparent;
+background: #040714;
 display: flex;
 justify-content: space-between;
 align-items: center;
@@ -79,6 +79,7 @@ z-index: 3;
 const Logo = styled.a`
     max-height: 100px;
     width: 80px;
+    height: 80px;
     padding: 0;
     display: inline-block;
     img{
@@ -98,7 +99,7 @@ const NavItems = styled.div`
   margin-right: auto;
   margin-left: 25px;
 
-  @media (max-width: 768px) {
+  @media (max-width: 850px) {
     display: none;
   } 
   a {

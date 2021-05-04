@@ -1,13 +1,28 @@
-import React from 'react'
+import {useEffect, React} from 'react'
 import styled from 'styled-components';
+import LatestOnDisney from '../LatestOnDisney/LatestOnDisney';
+import Recommends from '../Recommends/Recommends';
 import ImageSlider from '../Slider/ImageSlider';
 import Viewers from '../Viewers/Viewers';
-const Home = () => {
+import Originals from '../Originals/Originals';
+import Trendings from '../Trendings/Trendings';
+import { FetchMovieonAuth } from '../../Redux/movies/movieActions';
+import { connect } from 'react-redux';
+
+
+const Home = ({FetchMovieonAuth}) => {
+    useEffect(() => {
+        FetchMovieonAuth();
+    }, [FetchMovieonAuth])
     return (
         <div>
             <Container>
             <ImageSlider/>
             <Viewers/>
+            <Recommends/>
+            <LatestOnDisney/>
+            <Originals/>
+            <Trendings/>
             </Container>
         </div>
     )
@@ -22,8 +37,9 @@ padding: 0 calc(3.5vw + 5px);
 &:after{
     background: url('/images/home-background.png');
     background-repeat: no-repeat;
-    backgound-size: 100% 100%, cover;
-    background-position: fixed;
+    background-size: 100% 100%, cover;
+    background-position: center;
+    background-attachment: fixed;
     content : "";
     position: absolute;
     inset: 0px;
@@ -32,4 +48,7 @@ padding: 0 calc(3.5vw + 5px);
 }
 `
 
-export default Home
+var actions = ({
+    FetchMovieonAuth,
+})
+export default connect(null, actions)(Home)

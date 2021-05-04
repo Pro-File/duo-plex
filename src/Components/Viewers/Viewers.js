@@ -23,32 +23,41 @@ const Viewers = () => {
                 </video>
             </Wrap>
             <Wrap>
+                <img src="/images/viewers-national.png" alt=''/>
+                <video autoPlay={true} loop={true} playsInline={true}>
+                <source src="/videos/1564676296-national-geographic.mp4" type="video/mp4"/>
+                </video>
+            </Wrap>
+            <Wrap>
                 <img src="/images/viewers-starwars.png" alt=''/>
                 <video autoPlay={true} loop={true} playsInline={true}>
                 <source src="/videos/1608229455-star-wars.mp4" type="video/mp4"/>
                 </video>
             </Wrap>
             <Wrap>
-                <img src="/images/viewers-national.png" alt=''/>
+                <img src="/images/dream.png" alt=''/>
                 <video autoPlay={true} loop={true} playsInline={true}>
-                <source src="/videos/1564676296-national-geographic.mp4" type="video/mp4"/>
-                </video>
+                <source src="/videos/1564674844-disney.mp4" type="video/mp4"/>
+                </video>  
             </Wrap>
         </Container>
     )
 }
 
 const Container  =styled.div`
-margin-top : 35px;
-padding: 30px 0px 26px;
+margin-top : 70px;
+padding: 0 0 26px;
 display: grid;
 grid-gap: 25px;
-gap: 25;
-grid-template-columns: repeat(5, minmax(0, 1fr));
+grid-template-columns: repeat(6, minmax(0, 1fr));
 
 @media (max-width: 768px){
-grid-template-columns: repeat(1, minmax(0, 1fr));
+grid-template-columns: repeat(2, minmax(0, 1fr));
 }
+@media (max-width: 400px){
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    grid-gap: 20px;
+    }
 `
 
 const Wrap = styled.div`
@@ -65,11 +74,9 @@ overflow: hidden;
 transition: all 250ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 0s;
 border: 2px solid rgb(249,249,249, 0.2);
 
-
 img{
     inset: 0px;
     // display: block;
-    // height: 100%;
     width: 100%;
     z-index: 1;
     object-fit: contain;
@@ -81,7 +88,6 @@ video{
     width: 100%;
     // display: block;
     object-fit: contain;
-    height: 100%;
     position: relative;
     bottom: 50%;
     opacity: 0;
@@ -93,7 +99,20 @@ video{
         opacity: 1;
     }
 }
+@media (max-width: 768px){
 
+    width: 100%;
+    height: 100%;
+    img{
+        width: 100%;
+        position: relative;
+        top: 0%;
+    }
+    video{
+        display: none;
+    }
+    }
+    
 `
 
 export default Viewers

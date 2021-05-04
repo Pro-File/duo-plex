@@ -8,6 +8,7 @@ import Header from './Components/Header/Header';
 import Home from './Components/Home/Home';
 import {checkAuthStatus} from '../src/Redux/auth/authActions';
 import { connect } from 'react-redux';
+import Details from './Components/Details/Details';
 // import SignUp from './Components/SignUp/SignUp';
 // import testModal from './Components/TestModal/testModal'
 
@@ -30,6 +31,11 @@ function App({checkAuthStatus, auth}) {
         <Route path = "/home">
         <Home/>
         </Route>
+
+        <Route path= "/detail/:id">
+        <Details/>
+        </Route>
+
         <Route path = "/test">
         {/* <SignUp/> */}
         </Route>
