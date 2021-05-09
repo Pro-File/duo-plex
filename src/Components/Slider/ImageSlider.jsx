@@ -63,6 +63,10 @@ const Carousel = styled(Slider)`
     .slick-next{
         right: 20px;
     }
+    .slick-prev:before, .slick-next:before{
+        opacity: 0.5;
+        font-size: 22px;
+    }
 `
 const Wrap = styled.div`
     border-radius: 5px;
@@ -87,5 +91,14 @@ const Wrap = styled.div`
             // border: 2px solid rgb(249,249,249, 0.8);
         }
     }
+@media (max-width: 768px){
+a{
+    height: 180px;
+}
+a img{
+    object-fit: cover;
+    object-position: center;
+}
+}
 `
 export default ImageSlider
